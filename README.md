@@ -72,9 +72,21 @@ Have you ever wanted your very own Pokédex? Do you often see strange species o
 
 ## Class Diagram (Show data classes (DTOs), Activities, Fragments, MVVM, etc.)
 
-  - Note from ya girl - I named our package &quot;edu.uc.it3048.mypokedex&quot;
+  ![mobileDesignClassDiagram](https://user-images.githubusercontent.com/65239895/83370742-4534e780-a38e-11ea-9270-7b7b9c4897a8.jpeg)
 
-## Class Diagram Description
+
+## Class Diagram Description  
+The IPokemonDAO will be our data access object for pokemon, and the pokemon dto will be used in the view model for the pokemon list and specific pokemon views.  
+
+The IUserDAO is our user account data access object, and will be used any time information about the user is needed.  The user dto will possibly need used in every view to keep track of who is logged into the app, but for now it is only associated with the account view model class.  
+
+Every screen is tied to the retrofit client instance
+Our app database class reaches out to our Room database, where user information will be stored.  Pokemon will be an api call from the PokeAPI.  
+
+## Scrum/Kanban Board & Product Backlog  
+
+To view our product backlog and scrum/kanban board, please navigate to our projects section on the github repository.
+
 
 ## Scrum Roles
 
