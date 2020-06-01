@@ -19,7 +19,7 @@ Have you ever wanted your very own Pokédex? Do you often see strange species o
 
 [https://projects.invisionapp.com/prototype/MyPokedex-Storyboard-ckamkvt69004wqu01al3jrpvm/play/c030acf7](https://projects.invisionapp.com/prototype/MyPokedex-Storyboard-ckamkvt69004wqu01al3jrpvm/play/c030acf7)
 
- ![](RackMultipart20200531-4-1m3koc7_html_a134b96fdecb3544.png)
+ ![storyboard](https://user-images.githubusercontent.com/65239895/83366488-66410c80-a37d-11ea-9b1c-72f3dc274a0c.png)
 
 ## Functional Requirements
 
