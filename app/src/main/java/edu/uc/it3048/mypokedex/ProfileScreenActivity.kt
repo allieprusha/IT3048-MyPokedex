@@ -1,9 +1,12 @@
 package edu.uc.it3048.mypokedex
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.ImageButton
+import kotlinx.android.synthetic.main.profile_screen_activity.*
 
 class ProfileScreenActivity : AppCompatActivity() {
 
@@ -11,8 +14,27 @@ class ProfileScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_screen_activity)
 
-        // Calling the savedLocations method
+        // Calling the savedLocations and openCamera method
         savedLocations()
+        openCamera()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Populates the image view with the picture taken
+        if (requestCode == 123){
+            val map = data?.extras?.get("data") as Bitmap
+            imgPokemonLocation.setImageBitmap(map)
+        }
+    }
+
+    // Method to open camera and take photo
+    private fun openCamera(){
+        btnCamera.setOnClickListener {
+            val imageIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(imageIntent, 123)
+        }
     }
 
     // Method to view saved pokemon sighting locations
