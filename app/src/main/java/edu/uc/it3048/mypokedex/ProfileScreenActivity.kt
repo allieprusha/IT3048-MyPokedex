@@ -35,6 +35,7 @@ class ProfileScreenActivity : AppCompatActivity() {
         savedLocations()
         takePhoto()
         showSignInOptions()
+        onSupportNavigateUp()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

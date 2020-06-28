@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         login()
     }
 
-    // Method to login to firebase, proceed to new screen (needs firebase integration)
+    // Method to login to firebase, proceed to new screen
     private fun login(){
         val loginButton = findViewById<ImageButton>(R.id.btnLogin)
             loginButton.setOnClickListener {
