@@ -12,12 +12,20 @@ import app.plantdiary.individualassignment3048q.dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import kotlinx.android.synthetic.main.profile_screen_activity.*
 
 class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
-    lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private lateinit var firestore : FirebaseFirestore
+
+    init {
+        firestore = FirebaseFirestore.getInstance()
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,8 +102,17 @@ class ProfileScreenActivity : AppCompatActivity() {
             pokemonName = edtTextPokemonName.text.toString()
             pokemonType = edtTextPokemonType.text.toString()
             pokemonDescription = edtTxtPokemonDescription.text.toString()
-
-            // TODO save this object
         }
+
+        save(sightingLocation)
+    }
+
+    // Populates database with data from profile screen text fields
+    private fun save(location: Locations){
+        firestore.collection("locations")
+            .document()
+            .set(location)
+
+            // TODO add log statement?
     }
 }
