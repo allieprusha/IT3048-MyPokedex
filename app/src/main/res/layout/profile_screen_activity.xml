@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4FC3F7"
+    android:background="@color/colorBackground"
     tools:context=".ProfileScreenActivity">
 
     <TextView
@@ -116,7 +116,7 @@
             android:src="@drawable/ic_camera_button" />
 
         <ImageButton
-            android:id="@+id/imgBtnSave"
+            android:id="@+id/BtnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5sp"
@@ -126,7 +126,7 @@
             android:src="@drawable/ic_save_button" />
 
         <ImageButton
-            android:id="@+id/imgBtnFolder"
+            android:id="@+id/BtnFolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5sp"
