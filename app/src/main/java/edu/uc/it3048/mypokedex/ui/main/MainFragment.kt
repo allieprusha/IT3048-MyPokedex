@@ -23,4 +23,8 @@ class MainFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    companion object {
+        fun newInstance() = MainFragment()
+    }
+
 }
