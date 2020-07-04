@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 
 interface IPokemonDAO {
-    @GET(value = "https://pokeapi.co/api/v2/pokemon/")
+    @GET(value = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json")
     fun getAllPokemon(): Call<ArrayList<Pokemon>>
 
     @GET(value = "https://pokeapi.co/api/v2/pokemon/")

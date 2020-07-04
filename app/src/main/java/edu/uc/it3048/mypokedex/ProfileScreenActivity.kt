@@ -20,10 +20,9 @@ class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
-    private lateinit var firestore : FirebaseFirestore
+    private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
 
     init {
-        firestore = FirebaseFirestore.getInstance()
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
 
@@ -98,7 +97,7 @@ class ProfileScreenActivity : AppCompatActivity() {
     }
 
     private fun saveLocation(){
-        var sightingLocation = Locations().apply {
+        val sightingLocation = Locations().apply {
             pokemonName = edtTextPokemonName.text.toString()
             pokemonType = edtTextPokemonType.text.toString()
             pokemonDescription = edtTxtPokemonDescription.text.toString()
