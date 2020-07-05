@@ -9,14 +9,14 @@ class SavedSightingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.saved_sightings_activity)
 
-        // Allows for back arrow navigation
+        /** Allows for back arrow navigation */
         val actionBar = supportActionBar
         actionBar!!.title = "Saved Locations"
         actionBar.setDisplayHomeAsUpEnabled(true)
     }
 
-    // Press the back button to go back to previous activity
-    override fun onSupportNavigateUp(): Boolean {
+    /** Press the back button to go back to previous activity */
+    override fun onSupportNavigateUp() : Boolean {
         onBackPressed()
         return true
     }
