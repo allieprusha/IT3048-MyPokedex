@@ -17,6 +17,7 @@ class SavedSightingsActivity : AppCompatActivity() {
 
     // Press the back button to go back to previous activity
     override fun onSupportNavigateUp(): Boolean {
+
         onBackPressed()
         return true
     }

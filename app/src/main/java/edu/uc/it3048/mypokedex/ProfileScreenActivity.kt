@@ -19,7 +19,7 @@ import java.util.jar.Manifest
 class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
-    lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private lateinit var loginProviders : List<AuthUI.IdpConfig>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
