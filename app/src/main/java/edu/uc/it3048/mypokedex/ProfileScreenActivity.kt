@@ -18,8 +18,8 @@ import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
 
-    private val LOGIN_REQUEST_CODE: Int = 607
-    lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private val loginRequestCode: Int = 607
+    private lateinit var loginProviders : List<AuthUI.IdpConfig>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class ProfileScreenActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // User must login with email or else an error toast message appears
-        if (requestCode == LOGIN_REQUEST_CODE){
+        if (requestCode == loginRequestCode){
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == RESULT_OK){
                 val user = FirebaseAuth.getInstance().currentUser
@@ -79,6 +79,6 @@ class ProfileScreenActivity : AppCompatActivity() {
     // Shows list of login options (Email and Google)
     private fun showSignInOptions(){
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
-            .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
+            .setTheme(R.style.AppTheme).build(), loginRequestCode)
     }
 }
