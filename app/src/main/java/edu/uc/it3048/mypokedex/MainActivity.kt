@@ -7,7 +7,6 @@ import android.widget.ImageButton
 import edu.uc.it3048.mypokedex.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)

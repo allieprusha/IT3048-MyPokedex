@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.profile_screen_activity.*
 import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
-
     private val LOGIN_REQUEST_CODE: Int = 607
     lateinit var loginProviders : List<AuthUI.IdpConfig>
 

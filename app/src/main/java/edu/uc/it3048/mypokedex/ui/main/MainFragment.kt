@@ -9,11 +9,6 @@ import android.view.ViewGroup
 import edu.uc.it3048.mypokedex.R
 
 class MainFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +20,10 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+
+    companion object {
+        fun newInstance() = MainFragment()
     }
 
 }
