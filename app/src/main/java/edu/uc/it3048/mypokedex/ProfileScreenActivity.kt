@@ -1,26 +1,37 @@
 package edu.uc.it3048.mypokedex
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.Toast
-import app.plantdiary.individualassignment3048q.dto.Locations
+import dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.profile_screen_activity.*
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
     private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var storageReference = FirebaseStorage.getInstance().getReference("images/")
+    private var map : Bitmap? = null
 
     init {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -60,7 +71,7 @@ class ProfileScreenActivity : AppCompatActivity() {
 
         // Populates the image view with the picture taken
         if (requestCode == 123){
-            val map = data?.extras?.get("data") as Bitmap
+            map = data?.extras?.get("data") as Bitmap
             imgPokemonLocation.setImageBitmap(map)
         }
     }

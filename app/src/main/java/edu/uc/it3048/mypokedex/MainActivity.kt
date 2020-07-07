@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
-import edu.uc.it3048.mypokedex.ui.main.MainFragment
+import androidx.lifecycle.MutableLiveData
 
 class MainActivity : AppCompatActivity() {
 
