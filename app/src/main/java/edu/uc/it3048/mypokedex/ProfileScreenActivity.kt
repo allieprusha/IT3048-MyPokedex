@@ -1,25 +1,41 @@
 package edu.uc.it3048.mypokedex
 
-import android.content.Context
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.profile_screen_activity.*
-import java.util.jar.Manifest
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
-    lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private lateinit var loginProviders : List<AuthUI.IdpConfig>
+    private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var storageReference = FirebaseStorage.getInstance().getReference("images/")
+    private var map : Bitmap? = null
+
+    init {
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +48,11 @@ class ProfileScreenActivity : AppCompatActivity() {
         )
 
         // Calling various methods
-        savedLocations()
+        savedLocationsFolder()
         takePhoto()
         showSignInOptions()
         onSupportNavigateUp()
+        btnSaveLocation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -54,7 +71,7 @@ class ProfileScreenActivity : AppCompatActivity() {
 
         // Populates the image view with the picture taken
         if (requestCode == 123){
-            val map = data?.extras?.get("data") as Bitmap
+            map = data?.extras?.get("data") as Bitmap
             imgPokemonLocation.setImageBitmap(map)
         }
     }
@@ -68,7 +85,7 @@ class ProfileScreenActivity : AppCompatActivity() {
     }
 
     // Method to view saved pokemon sighting locations
-    private fun savedLocations(){
+    private fun savedLocationsFolder(){
         val folderButton = findViewById<ImageButton>(R.id.imgBtnFolder)
             folderButton.setOnClickListener {
                 val savedLocationsIntent = Intent(this, SavedSightingsActivity::class.java)
@@ -80,5 +97,32 @@ class ProfileScreenActivity : AppCompatActivity() {
     private fun showSignInOptions(){
         startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
             .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
+    }
+
+    // Button for saving locations to Firebase
+    private fun btnSaveLocation(){
+        val save = findViewById<ImageButton>(R.id.imgBtnSave)
+            save.setOnClickListener {
+                saveLocation()
+            }
+    }
+
+    private fun saveLocation(){
+        val sightingLocation = Locations().apply {
+            pokemonName = edtTextPokemonName.text.toString()
+            pokemonType = edtTextPokemonType.text.toString()
+            pokemonDescription = edtTxtPokemonDescription.text.toString()
+        }
+
+        save(sightingLocation)
+    }
+
+    // Populates database with data from profile screen text fields
+    private fun save(location: Locations){
+        firestore.collection("locations")
+            .document()
+            .set(location)
+
+            // TODO add log statement?
     }
 }
