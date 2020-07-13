@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4FC3F7"
+    android:contentDescription="@string/gallery_description"
     tools:context=".ProfileScreenActivity">
 
     <TextView
@@ -124,6 +125,16 @@
             android:background="@color/colorPrimaryDark"
             android:contentDescription="@string/description_save_button"
             android:src="@drawable/ic_save_button" />
+
+        <ImageButton
+            android:id="@+id/imgBtnGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/gallery_description"
+            app:srcCompat="@drawable/ic_gallery"
+            tools:srcCompat="@drawable/ic_gallery" />
 
         <ImageButton
             android:id="@+id/imgBtnFolder"

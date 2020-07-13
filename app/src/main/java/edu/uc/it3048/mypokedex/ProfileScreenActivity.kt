@@ -1,17 +1,23 @@
 package edu.uc.it3048.mypokedex
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -23,15 +29,23 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.profile_screen_activity.*
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
 
     private val LOGIN_REQUEST_CODE: Int = 607
+    private val SAVE_IMAGE_REQUEST_CODE = 513
+    private val CAMERA_REQUEST_CODE = 918
+    private val GALLERY_REQUEST_CODE = 555
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
     private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var storageReference = FirebaseStorage.getInstance().getReference("images/")
-    private var map : Bitmap? = null
+    private var storageReference = FirebaseStorage.getInstance()
+    private lateinit var currentPhotoPath : String
+    private var selectedPhotoUri : Uri? = null
 
     init {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -49,10 +63,17 @@ class ProfileScreenActivity : AppCompatActivity() {
 
         // Calling various methods
         savedLocationsFolder()
-        takePhoto()
         showSignInOptions()
         onSupportNavigateUp()
         btnSaveLocation()
+
+        btnCamera.setOnClickListener {
+            prepTakePhoto()
+        }
+
+        imgBtnGallery.setOnClickListener {
+            prepOpenGallery()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,21 +88,33 @@ class ProfileScreenActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "" + response!!.error!!.message, Toast.LENGTH_SHORT).show()
             }
-        }
-
-        // Populates the image view with the picture taken
-        if (requestCode == 123){
-            map = data?.extras?.get("data") as Bitmap
-            imgPokemonLocation.setImageBitmap(map)
+        } else if (requestCode == SAVE_IMAGE_REQUEST_CODE) {
+            Toast.makeText(this, "Image Saved", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == GALLERY_REQUEST_CODE) {
+            if (data != null && data.data != null) {
+                selectedPhotoUri = data.data
+                val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri!!)
+                val bitmap = ImageDecoder.decodeBitmap(source)
+                imgPokemonLocation.setImageBitmap(bitmap)
+            }
         }
     }
 
     // Method to open camera and take photo
     private fun takePhoto(){
-        btnCamera.setOnClickListener {
-            val imageIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(imageIntent, 123)
-        }
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
+                takePictureIntent -> takePictureIntent.resolveActivity(this.packageManager)
+                if (takePictureIntent == null) {
+                    Toast.makeText(this, "Unable to save photo", Toast.LENGTH_LONG).show()
+                } else {
+                    val photoFile = createImageFile()
+                    photoFile.also {
+                        var photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+                        startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
+                    }
+                }
+            }
     }
 
     // Method to view saved pokemon sighting locations
@@ -104,6 +137,7 @@ class ProfileScreenActivity : AppCompatActivity() {
         val save = findViewById<ImageButton>(R.id.imgBtnSave)
             save.setOnClickListener {
                 saveLocation()
+                uploadImageToFirebaseStorage()
             }
     }
 
@@ -124,5 +158,60 @@ class ProfileScreenActivity : AppCompatActivity() {
             .set(location)
 
             // TODO add log statement?
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun createImageFile() : File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss".format(Date()))
+        val storageDir : File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("MyPokedex${timeStamp}", ".jpg", storageDir).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun prepTakePhoto() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            takePhoto()
+        } else {
+            val permissionRequest = arrayOf(android.Manifest.permission.CAMERA)
+            requestPermissions(permissionRequest, CAMERA_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            CAMERA_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takePhoto()
+                } else {
+                    Toast.makeText(this, "Unable to take photo without permission", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun prepOpenGallery() {
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            type = "image/*"
+            startActivityForResult(this, GALLERY_REQUEST_CODE)
+        }
+    }
+
+    private fun uploadImageToFirebaseStorage() {
+        val fileName = UUID.randomUUID().toString()
+        val storageReference = FirebaseStorage.getInstance().getReference("/images/$fileName")
+
+        storageReference.putFile(selectedPhotoUri!!)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Upload successful", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+            }
     }
 }
