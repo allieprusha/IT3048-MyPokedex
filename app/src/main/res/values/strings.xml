@@ -15,4 +15,6 @@
     <string name="label_pokemon_sightings">Pokemon Sighting Locations</string>
     <string name="recycler_image">Image of Location</string>
     <string name="recycler_image_pokemon">Pokemon Image</string>
+    <string name="btn_Gallery">Gallery</string>
+    <string name="gallery_description">Opens Gallery</string>
 </resources>
