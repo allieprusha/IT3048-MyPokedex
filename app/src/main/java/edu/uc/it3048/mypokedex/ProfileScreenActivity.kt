@@ -36,7 +36,6 @@ import java.util.*
 import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
-
     private val LOGIN_REQUEST_CODE: Int = 607
     private val SAVE_IMAGE_REQUEST_CODE = 513
     private val CAMERA_REQUEST_CODE = 918
