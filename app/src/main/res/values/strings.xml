@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyPokedex</string>
     <string name="hint_pokemon_search">Search Pokemon…</string>
-    <string name="description_profile_buttton">Profile Button</string>
+    <string name="description_profile_button">Profile Button</string>
     <string name="description_camera_button">Camera button</string>
     <string name="description_save_button">Save Button</string>
     <string name="description_folder_button">Folder button</string>
