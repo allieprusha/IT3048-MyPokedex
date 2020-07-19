@@ -1,7 +1,11 @@
 package dto
 
+import com.google.gson.annotations.SerializedName
+
 class Evolution {
 
-    var num : String? = null
-    var name : String? = null
+    @SerializedName("num")
+    var evolutionNumber : String? = null
+    @SerializedName("name")
+    var pokemonEvolutionName : String? = null
 }
