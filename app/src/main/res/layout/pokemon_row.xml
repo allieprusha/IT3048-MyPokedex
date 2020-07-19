@@ -20,7 +20,8 @@
         android:id="@+id/txtRecyclerPokemonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:text="TextView"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -29,10 +30,11 @@
         app:layout_constraintTop_toTopOf="@+id/imgPokemon" />
 
     <TextView
-        android:id="@+id/txtRecyclerPokemonType"
+        android:id="@+id/txtRecyclerPokemonId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:text="TextView"
         android:textSize="18sp"
         android:textStyle="bold"
