@@ -1,13 +1,11 @@
 package dao
 
-import retrofit2.Call
+import dto.Pokedex
+import io.reactivex.Observable
 import retrofit2.http.GET
 
 interface IPokemonDAO {
 
-    /*
-    // Json endpoint for pokemon data
-    @GET("pokedex.json")
-    fun getAllPokemon(): Call<ArrayList<PokemonListItem>>
-     */
+    @get:GET("pokedex.json")
+    val pokemonList : Observable<Pokedex>
 }
