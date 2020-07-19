@@ -29,8 +29,8 @@ class PokemonViewAdapter(private var context: Context, private var pokemonList :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolderV2, position: Int) {
-        Glide.with(context).load(pokemonList[position].img).override(500, 500).into(holder.pokemonImage)
-        holder.pokemonName.text = pokemonList[position].name
-        holder.pokemonId.text = pokemonList[position].id.toString()
+        Glide.with(context).load(pokemonList[position].pokemonImg).override(500, 500).into(holder.pokemonImage)
+        holder.pokemonName.text = pokemonList[position].pokemonName
+        holder.pokemonId.text = pokemonList[position].pokemonId.toString()
     }
 }

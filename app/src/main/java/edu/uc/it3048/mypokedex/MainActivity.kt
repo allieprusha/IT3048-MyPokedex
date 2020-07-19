@@ -3,6 +3,7 @@ package edu.uc.it3048.mypokedex
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import dao.IPokemonDAO
@@ -15,9 +16,9 @@ import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
-    internal var compositeDisposable = CompositeDisposable()
+    private var compositeDisposable = CompositeDisposable()
     private val retrofit = RetrofitClientInstance.retrofitInstance
-    internal var iPokemonList = retrofit?.create(IPokemonDAO::class.java)
+    private var iPokemonList = retrofit?.create(IPokemonDAO::class.java)
     var pokemonList : List<Pokemon> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,9 +26,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         rcycViewPokemon.layoutManager = LinearLayoutManager(this)
 
-        // Calling the login method
+        // Method calling
         login()
         fetchPokemonData()
+        populatePokemonAutoComplete()
     }
 
     // Method to login to firebase, proceed to new screen
@@ -46,8 +48,24 @@ class MainActivity : AppCompatActivity() {
             .subscribe { pokemon ->
                 pokemonList = pokemon.pokemon!!
 
-                val adapter = PokemonViewAdapter(this, pokemonList)
-                rcycViewPokemon.adapter = adapter
+                val pokemonViewAdapter= PokemonViewAdapter(this, pokemonList)
+                rcycViewPokemon.adapter = pokemonViewAdapter
             })
+    }
+
+    private fun populatePokemonAutoComplete() {
+        compositeDisposable.add(iPokemonList!!.pokemonList
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { pokemon ->
+                pokemonList = pokemon.pokemon!!
+
+                val autoCompleteAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pokemonList)
+                atcPokemonSearch.setAdapter(autoCompleteAdapter)
+            })
+    }
+
+    private fun filterPokemonRecyclerView() {
+        // TODO: Filter the pokemon list based off of search text
     }
 }

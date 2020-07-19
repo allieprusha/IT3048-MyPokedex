@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SavedSightingsActivity" />
         <activity android:name=".ProfileScreenActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity" android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

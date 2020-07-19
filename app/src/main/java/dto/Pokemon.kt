@@ -1,24 +1,43 @@
 package dto
 
-
 import com.google.gson.annotations.SerializedName
 
 class Pokemon {
 
-    var id = 0
-    var num : String? = null
-    var name : String? = null
-    var img : String? = null
-    var type : List<String>? = null
-    var height: String? = null
-    var weight : String? = null
-    var candy : String? = null
-    var egg : String? = null
-    var spawn_choice = 0.toDouble()
-    var avg_spawns = 0.toDouble()
-    var spawn_time : String? = null
-    var multipliers : List<Double>? = null
-    var weakness : List<String>? = null
-    var next_evolution : List<Evolution>? = null
-    var prev_evolution : List<Evolution>? = null
+    @SerializedName("id")
+    var pokemonId = 0
+    @SerializedName("num")
+    var pokemonNum : String? = null
+    @SerializedName("name")
+    var pokemonName : String? = null
+    @SerializedName("img")
+    var pokemonImg : String? = null
+    @SerializedName("type")
+    var pokemonType : List<String>? = null
+    @SerializedName("height")
+    var pokemonHeight: String? = null
+    @SerializedName("weight")
+    var pokemonWeight : String? = null
+    @SerializedName("candy")
+    var pokemonCandy : String? = null
+    @SerializedName("egg")
+    var pokemonEgg : String? = null
+    @SerializedName("spawn_choice")
+    var pokemonSpawnChoice = 0.toDouble()
+    @SerializedName("avg_spawns")
+    var pokemonAvgSpawns = 0.toDouble()
+    @SerializedName("spawn_time")
+    var pokemonSpawnTime : String? = null
+    @SerializedName("multipliers")
+    var pokemonMultipliers : List<Double>? = null
+    @SerializedName("weakness")
+    var pokemonWeakness : List<String>? = null
+    @SerializedName("next_evolution")
+    var pokemonNextEvolution : List<Evolution>? = null
+    @SerializedName("prev_evolution")
+    var pokemonPrevEvolution : List<Evolution>? = null
+
+    override fun toString(): String {
+        return "$pokemonName"
+    }
 }
