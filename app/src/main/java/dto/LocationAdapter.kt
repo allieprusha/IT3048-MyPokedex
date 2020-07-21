@@ -1,18 +1,15 @@
 package dto
 
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
 import edu.uc.it3048.mypokedex.R
 import kotlinx.android.synthetic.main.location_row.view.*
 
 class LocationAdapter : RecyclerView.Adapter<CustomViewHolder>() {
 
-    val pokemonName = listOf("Balbasaur", "Charmander", "Squirtle")
+    private val pokemonName = listOf("Bulbasaur", "Charmander", "Squirtle")
 
     override fun getItemCount(): Int {
         return pokemonName.size

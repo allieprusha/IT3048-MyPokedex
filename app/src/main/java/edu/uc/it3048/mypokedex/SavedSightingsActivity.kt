@@ -3,13 +3,7 @@ package edu.uc.it3048.mypokedex
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.ktx.Firebase
 import dto.LocationAdapter
 import kotlinx.android.synthetic.main.saved_sightings_activity.*
 

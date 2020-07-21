@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var compositeDisposable = CompositeDisposable()
     private val retrofit = RetrofitClientInstance.retrofitInstance
     private var iPokemonList = retrofit?.create(IPokemonDAO::class.java)
-    var pokemonList : List<Pokemon> = ArrayList()
+    private var pokemonList : List<Pokemon> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +61,7 @@ class MainActivity : AppCompatActivity() {
                 pokemonList = pokemon.pokemon!!
 
                 val autoCompleteAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pokemonList)
-                atcPokemonSearch.setAdapter(autoCompleteAdapter)
+                actPokemonSearch.setAdapter(autoCompleteAdapter)
             })
-    }
-
-    private fun filterPokemonRecyclerView() {
-        // TODO: Filter the pokemon list based off of search text
     }
 }
