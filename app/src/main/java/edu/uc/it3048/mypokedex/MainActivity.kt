@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 pokemonList = pokemon.pokemon!!
 
                 val autoCompleteAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pokemonList)
-                atcPokemonSearch.setAdapter(autoCompleteAdapter)
+                actPokemonSearch.setAdapter(autoCompleteAdapter)
             })
     }
 

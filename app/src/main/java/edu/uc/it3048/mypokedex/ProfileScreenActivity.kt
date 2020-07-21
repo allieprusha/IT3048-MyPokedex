@@ -55,7 +55,7 @@ class ProfileScreenActivity : AppCompatActivity() {
         setContentView(R.layout.profile_screen_activity)
 
         // Lists the login providers that we are using
-        loginProviders = listOf<AuthUI.IdpConfig>(
+        loginProviders = listOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
