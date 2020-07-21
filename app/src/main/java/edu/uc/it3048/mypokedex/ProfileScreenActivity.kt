@@ -1,20 +1,15 @@
 package edu.uc.it3048.mypokedex
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -24,16 +19,11 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.profile_screen_activity.*
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
     private val LOGIN_REQUEST_CODE: Int = 607
@@ -42,7 +32,6 @@ class ProfileScreenActivity : AppCompatActivity() {
     private val GALLERY_REQUEST_CODE = 555
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
     private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var storageReference = FirebaseStorage.getInstance()
     private lateinit var currentPhotoPath : String
     private var selectedPhotoUri : Uri? = null
 
