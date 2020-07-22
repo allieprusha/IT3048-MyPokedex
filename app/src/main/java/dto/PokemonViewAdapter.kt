@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.uc.it3048.mypokedex.R
 
-class PokemonViewAdapter(private var context: Context, private var pokemonList : List<Pokemon>) : RecyclerView.Adapter<PokemonViewAdapter.CustomViewHolderV2>() {
+class PokemonViewAdapter(private var context: Context, private var pokemonList : List<Pokemon>, val clickListener: (Pokemon) -> Unit) : RecyclerView.Adapter<PokemonViewAdapter.CustomViewHolderV2>() {
 
     inner class CustomViewHolderV2(view: View) : RecyclerView.ViewHolder(view) {
         internal var pokemonImage = itemView.findViewById<ImageView>(R.id.imgPokemon)
         internal var pokemonName = itemView.findViewById<TextView>(R.id.txtRecyclerPokemonName)
         internal var pokemonId = itemView.findViewById<TextView>(R.id.txtRecyclerPokemonId)
+
+        fun bind(pokemon: Pokemon, clickListener: (Pokemon) -> Unit) {
+            itemView.setOnClickListener { clickListener(pokemon)}
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,5 +36,6 @@ class PokemonViewAdapter(private var context: Context, private var pokemonList :
         Glide.with(context).load(pokemonList[position].pokemonImg).override(500, 500).into(holder.pokemonImage)
         holder.pokemonName.text = pokemonList[position].pokemonName
         holder.pokemonId.text = pokemonList[position].pokemonId.toString()
+        (holder as CustomViewHolderV2).bind(pokemonList[position], clickListener)
     }
 }

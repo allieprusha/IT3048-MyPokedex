@@ -1,10 +1,13 @@
 package edu.uc.it3048.mypokedex
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dao.IPokemonDAO
 import dto.Pokemon
@@ -25,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         rcycViewPokemon.layoutManager = LinearLayoutManager(this)
+        rcycViewPokemon.adapter = PokemonViewAdapter(this, pokemonList, { pokemonItem : Pokemon -> pokemonClicked(pokemonItem) })
+
 
         // Method calling
         login()
@@ -48,9 +53,13 @@ class MainActivity : AppCompatActivity() {
             .subscribe { pokemon ->
                 pokemonList = pokemon.pokemon!!
 
-                val pokemonViewAdapter= PokemonViewAdapter(this, pokemonList)
+                val pokemonViewAdapter= PokemonViewAdapter(this, pokemonList, { pokemonItem : Pokemon -> pokemonClicked(pokemonItem) })
                 rcycViewPokemon.adapter = pokemonViewAdapter
             })
+    }
+
+    private fun pokemonClicked(pokemonItem : Pokemon) {
+        Toast.makeText(this, "Clicked: ${pokemonItem.pokemonName}", Toast.LENGTH_LONG).show()
     }
 
     private fun populatePokemonAutoComplete() {
