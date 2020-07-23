@@ -17,4 +17,9 @@
     <string name="recycler_image_pokemon">Pokemon Image</string>
     <string name="btn_Gallery">Gallery</string>
     <string name="gallery_description">Opens Gallery</string>
+    <string name="pokemon_Name">Name:</string>
+    <string name="pokemon_Height">Height:</string>
+    <string name="lbl_weight">Weight:</string>
+    <string name="pokemon_image">Pokemon Image</string>
+    <string name="pokemon_id">Pokemon ID:</string>
 </resources>
