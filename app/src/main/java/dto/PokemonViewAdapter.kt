@@ -45,8 +45,16 @@ class PokemonViewAdapter(private var context: Context, private var pokemonList :
             val pokemonInfoIntent = Intent(context, PokemonInfoActivity::class.java)
             pokemonInfoIntent.putExtra("image", pokemonList[position].pokemonImg)
             pokemonInfoIntent.putExtra("id", pokemonList[position].pokemonId.toString())
+            pokemonInfoIntent.putExtra("num", pokemonList[position].pokemonNum.toString())
+            pokemonInfoIntent.putExtra("type", pokemonList[position].pokemonType.toString())
+            pokemonInfoIntent.putExtra("candy", pokemonList[position].pokemonCandy)
+            pokemonInfoIntent.putExtra("egg", pokemonList[position].pokemonEgg)
+            pokemonInfoIntent.putExtra("spawn_choice", pokemonList[position].pokemonSpawnChoice.toString())
+            pokemonInfoIntent.putExtra("avg_spawns", pokemonList[position].pokemonAvgSpawns.toString())
+            pokemonInfoIntent.putExtra("spawn_time", pokemonList[position].pokemonSpawnTime)
             context.startActivity(pokemonInfoIntent)
         }
+
     }
 }
 

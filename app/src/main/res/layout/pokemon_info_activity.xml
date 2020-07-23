@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4FC3F7"
     tools:context=".PokemonInfoActivity">
 
     <ImageView
@@ -30,8 +31,9 @@
 
     <TextView
         android:id="@+id/lblID"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="180dp"
         android:text="TextView"
@@ -39,4 +41,159 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtPokemonID"
         app:layout_constraintTop_toBottomOf="@+id/pokemonInfoImage" />
+
+    <TextView
+        android:id="@+id/txtPokemonNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pokemon_num"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtPokemonID"
+        app:layout_constraintTop_toBottomOf="@+id/txtPokemonID" />
+
+    <TextView
+        android:id="@+id/lblPokemonNum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtPokemonNum"
+        app:layout_constraintTop_toBottomOf="@+id/lblID" />
+
+    <TextView
+        android:id="@+id/txtPokemonType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/pokemon_type"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtPokemonNum"
+        app:layout_constraintTop_toBottomOf="@+id/txtPokemonNum" />
+
+    <TextView
+        android:id="@+id/lblPokemonType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtPokemonType"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokemonNum" />
+
+    <TextView
+        android:id="@+id/txtCandy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/candy"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtPokemonType"
+        app:layout_constraintTop_toBottomOf="@+id/txtPokemonType" />
+
+    <TextView
+        android:id="@+id/lblCandy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtCandy"
+        app:layout_constraintTop_toBottomOf="@+id/lblPokemonType" />
+
+    <TextView
+        android:id="@+id/txtEgg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/egg"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtCandy"
+        app:layout_constraintTop_toBottomOf="@+id/txtCandy" />
+
+    <TextView
+        android:id="@+id/lblEgg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtEgg"
+        app:layout_constraintTop_toBottomOf="@+id/lblCandy" />
+
+    <TextView
+        android:id="@+id/txtSpawnChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/spawn_choice"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtEgg"
+        app:layout_constraintTop_toBottomOf="@+id/txtEgg" />
+
+    <TextView
+        android:id="@+id/lblSpawnChoice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtSpawnChoice"
+        app:layout_constraintTop_toBottomOf="@+id/lblEgg" />
+
+    <TextView
+        android:id="@+id/txtAveSpawns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/avg_spawns"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtSpawnChoice"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpawnChoice" />
+
+    <TextView
+        android:id="@+id/lblAvgSpawns"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtAveSpawns"
+        app:layout_constraintTop_toBottomOf="@+id/lblSpawnChoice" />
+
+    <TextView
+        android:id="@+id/txtSpawnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/spawn_time"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/txtAveSpawns"
+        app:layout_constraintTop_toBottomOf="@+id/txtAveSpawns" />
+
+    <TextView
+        android:id="@+id/lblSpawnTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtSpawnTime"
+        app:layout_constraintTop_toBottomOf="@+id/lblAvgSpawns" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
