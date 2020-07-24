@@ -22,6 +22,7 @@ import dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.ktx.Firebase
@@ -45,6 +46,7 @@ class ProfileScreenActivity : AppCompatActivity() {
     private var storageReference = FirebaseStorage.getInstance()
     private lateinit var currentPhotoPath : String
     private var selectedPhotoUri : Uri? = null
+    private var user : FirebaseUser? = null
 
     init {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -55,7 +57,7 @@ class ProfileScreenActivity : AppCompatActivity() {
         setContentView(R.layout.profile_screen_activity)
 
         // Lists the login providers that we are using
-        loginProviders = listOf<AuthUI.IdpConfig>(
+        loginProviders = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
@@ -125,9 +127,9 @@ class ProfileScreenActivity : AppCompatActivity() {
             }
     }
 
-    // Shows list of login options (Email and Google)
+    // Shows list of login options (Email and Google) (THIS IS WHERE FIREBASE AUTH ERROR IS FIXED)
     private fun showSignInOptions(){
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setIsSmartLockEnabled(false).setAvailableProviders(loginProviders)
             .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
     }
 
