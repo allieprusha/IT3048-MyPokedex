@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var compositeDisposable = CompositeDisposable()
     private val retrofit = RetrofitClientInstance.retrofitInstance
     private var iPokemonList = retrofit?.create(IPokemonDAO::class.java)
-    var pokemonList : List<Pokemon> = ArrayList()
+    private var pokemonList : List<Pokemon> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

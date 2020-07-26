@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.location_row.view.*
 
 class LocationAdapter : RecyclerView.Adapter<CustomViewHolder>() {
 
-    val pokemonName = listOf("Balbasaur", "Charmander", "Squirtle")
+    private val pokemonName = listOf("Balbasaur", "Charmander", "Squirtle")
 
     override fun getItemCount(): Int {
         return pokemonName.size
@@ -30,6 +30,4 @@ class LocationAdapter : RecyclerView.Adapter<CustomViewHolder>() {
     }
 }
 
-class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-}
+class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view)
