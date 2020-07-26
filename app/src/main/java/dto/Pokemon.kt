@@ -3,7 +3,6 @@ package dto
 import com.google.gson.annotations.SerializedName
 
 class Pokemon {
-
     @SerializedName("id")
     var pokemonId = 0
     @SerializedName("num")

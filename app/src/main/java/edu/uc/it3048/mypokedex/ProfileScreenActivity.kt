@@ -41,14 +41,15 @@ class ProfileScreenActivity : AppCompatActivity() {
     private val CAMERA_REQUEST_CODE = 918
     private val GALLERY_REQUEST_CODE = 555
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
-    private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var storageReference = FirebaseStorage.getInstance()
     private lateinit var currentPhotoPath : String
+    private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
     private var selectedPhotoUri : Uri? = null
 
     init {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
     }
+
+    //region On Functions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,45 +100,34 @@ class ProfileScreenActivity : AppCompatActivity() {
         }
     }
 
-    // Method to open camera and take photo
-    private fun takePhoto(){
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
-                takePictureIntent -> takePictureIntent.resolveActivity(this.packageManager)
-                if (takePictureIntent == null) {
-                    Toast.makeText(this, "Unable to save photo", Toast.LENGTH_LONG).show()
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            CAMERA_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takePhoto()
                 } else {
-                    val photoFile = createImageFile()
-                    photoFile.also {
-                        var photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
-                        startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
-                    }
+                    Toast.makeText(this, "Unable to take photo without permission", Toast.LENGTH_LONG).show()
                 }
             }
+        }
     }
 
-    // Method to view saved pokemon sighting locations
-    private fun savedLocationsFolder(){
-        val folderButton = findViewById<ImageButton>(R.id.imgBtnFolder)
-            folderButton.setOnClickListener {
-                val savedLocationsIntent = Intent(this, SavedSightingsActivity::class.java)
-                startActivity(savedLocationsIntent)
-            }
-    }
+    //endregion
 
-    // Shows list of login options (Email and Google)
-    private fun showSignInOptions(){
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
-            .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
-    }
+    //region Save Functions
 
     // Button for saving locations to Firebase
     private fun btnSaveLocation(){
         val save = findViewById<ImageButton>(R.id.imgBtnSave)
-            save.setOnClickListener {
-                saveLocation()
-                uploadImageToFirebaseStorage()
-            }
+        save.setOnClickListener {
+            saveLocation()
+            uploadImageToFirebaseStorage()
+        }
     }
 
     private fun saveLocation(){
@@ -156,39 +146,47 @@ class ProfileScreenActivity : AppCompatActivity() {
             .document()
             .set(location)
 
-            // TODO add log statement?
+        // TODO add log statement?
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun createImageFile() : File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss".format(Date()))
-        val storageDir : File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("MyPokedex${timeStamp}", ".jpg", storageDir).apply {
-            currentPhotoPath = absolutePath
+    // Method to view saved pokemon sighting locations
+    private fun savedLocationsFolder(){
+        val folderButton = findViewById<ImageButton>(R.id.imgBtnFolder)
+        folderButton.setOnClickListener {
+            val savedLocationsIntent = Intent(this, SavedSightingsActivity::class.java)
+            startActivity(savedLocationsIntent)
         }
     }
+    //endregion
+
+    //region Image Functions
 
     private fun prepTakePhoto() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            takePhoto()
-        } else {
-            val permissionRequest = arrayOf(android.Manifest.permission.CAMERA)
-            requestPermissions(permissionRequest, CAMERA_REQUEST_CODE)
+        try {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                takePhoto()
+            } else {
+                val permissionRequest = arrayOf(android.Manifest.permission.CAMERA)
+                requestPermissions(permissionRequest, CAMERA_REQUEST_CODE)
+            }
+        }
+        catch(e: IOException) {
+            error(e.message!!)
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
-            CAMERA_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    takePhoto()
-                } else {
-                    Toast.makeText(this, "Unable to take photo without permission", Toast.LENGTH_LONG).show()
+    // Method to open camera and take photo
+    private fun takePhoto(){
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
+                takePictureIntent -> takePictureIntent.resolveActivity(this.packageManager)
+            if (takePictureIntent == null) {
+                Toast.makeText(this, "Unable to save photo", Toast.LENGTH_LONG).show()
+            } else {
+                val photoFile = createImageFile()
+                photoFile.also {
+                    var photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+                    startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
                 }
             }
         }
@@ -212,5 +210,22 @@ class ProfileScreenActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
             }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun createImageFile() : File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss".format(Date()))
+        val storageDir : File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("MyPokedex${timeStamp}", ".jpg", storageDir).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    //endregion
+
+    // Shows list of login options (Email and Google)
+    private fun showSignInOptions(){
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
+            .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
     }
 }

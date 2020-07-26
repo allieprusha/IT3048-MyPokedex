@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import edu.uc.it3048.mypokedex.R
 
 class PokemonViewAdapter(private var context: Context, private var pokemonList : List<Pokemon>) : RecyclerView.Adapter<PokemonViewAdapter.CustomViewHolderV2>() {
-
     inner class CustomViewHolderV2(view: View) : RecyclerView.ViewHolder(view) {
         internal var pokemonImage = itemView.findViewById<ImageView>(R.id.imgPokemon)
         internal var pokemonName = itemView.findViewById<TextView>(R.id.txtRecyclerPokemonName)
