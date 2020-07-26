@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         // Method calling
         login()
+        profile()
         fetchPokemonData()
         populatePokemonAutoComplete()
     }
@@ -39,6 +40,15 @@ class MainActivity : AppCompatActivity() {
                 val loginIntent = Intent(this, ProfileScreenActivity::class.java)
                 startActivity(loginIntent)
             }
+    }
+
+    // Method to take the user to the profile page, rather than having to login every time
+    private fun profile(){
+        val profileButton = findViewById<ImageButton>(R.id.btnProfile)
+        profileButton.setOnClickListener {
+            val profileIntent = Intent(this, SavedSightingsActivity::class.java)
+            startActivity(profileIntent)
+        }
     }
 
     private fun fetchPokemonData() {

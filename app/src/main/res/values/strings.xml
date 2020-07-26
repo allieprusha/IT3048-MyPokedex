@@ -12,7 +12,7 @@
     <string name="label_pokemon_type">Pokemon Type</string>
     <string name="hint_pokemon_name">Enter name…</string>
     <string name="hint_pokemon_type">Enter type…</string>
-    <string name="label_pokemon_sightings">Pokemon Sighting Locations</string>
+    <string name="label_pokemon_sightings">Pokemon Sightings</string>
     <string name="recycler_image">Image of Location</string>
     <string name="recycler_image_pokemon">Pokemon Image</string>
     <string name="btn_Gallery">Gallery</string>

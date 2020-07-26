@@ -23,7 +23,7 @@ class SavedSightingsActivity : AppCompatActivity() {
 
         // Allows for back arrow navigation
         val actionBar = supportActionBar
-        actionBar!!.title = "Saved Locations"
+        actionBar!!.title = "Saved Sightings"
         actionBar.setDisplayHomeAsUpEnabled(true)
 
         recViewLocations.layoutManager = LinearLayoutManager(this)
