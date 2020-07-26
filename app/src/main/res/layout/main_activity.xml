@@ -13,6 +13,20 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            android:id="@+id/btnProfile"
+            android:layout_width="100dp"
+            android:layout_height="43dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/description_profile_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.403"
+            app:layout_constraintStart_toEndOf="@+id/btnLogin"
+            app:srcCompat="@drawable/ic_login_button"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageButton
             android:id="@+id/btnLogin"
             android:layout_width="100dp"
             android:layout_height="43dp"
@@ -21,6 +35,7 @@
             android:contentDescription="@string/description_profile_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.311"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_login_button"
             tools:ignore="VectorDrawableCompat" />
@@ -36,7 +51,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/atcPokemonSearch" />
+            app:layout_constraintTop_toBottomOf="@+id/atcPokemonSearch"/>
 
         <AutoCompleteTextView
             android:id="@+id/atcPokemonSearch"
