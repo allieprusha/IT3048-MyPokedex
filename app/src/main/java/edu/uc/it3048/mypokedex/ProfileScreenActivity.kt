@@ -127,7 +127,7 @@ class ProfileScreenActivity : AppCompatActivity() {
 
     // Shows list of login options (Email and Google)
     private fun showSignInOptions(){
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(loginProviders)
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setIsSmartLockEnabled(false).setAvailableProviders(loginProviders)
             .setTheme(R.style.AppTheme).build(), LOGIN_REQUEST_CODE)
     }
 

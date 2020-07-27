@@ -43,7 +43,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:hint="@string/hint_pokemon_search"
+            android:hint="@string/select_pokemon"
             android:textColor="@android:color/background_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
