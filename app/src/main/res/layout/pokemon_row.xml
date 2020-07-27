@@ -20,25 +20,57 @@
         android:id="@+id/txtRecyclerPokemonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="TextView"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgPokemon"
+        app:layout_constraintStart_toStartOf="@+id/lblHeight"
         app:layout_constraintTop_toTopOf="@+id/imgPokemon" />
 
     <TextView
         android:id="@+id/txtRecyclerPokemonId"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="TextView"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblHeight"
+        app:layout_constraintTop_toBottomOf="@+id/txtRecyclerPokemonName" />
+
+    <TextView
+        android:id="@+id/lblHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/pokemon_Height"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imgPokemon"
         app:layout_constraintTop_toBottomOf="@+id/txtRecyclerPokemonName" />
+
+    <TextView
+        android:id="@+id/lblWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/lbl_weight"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/lblHeight"
+        app:layout_constraintTop_toBottomOf="@+id/lblHeight" />
+
+    <TextView
+        android:id="@+id/txtWeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblWeight"
+        app:layout_constraintTop_toBottomOf="@+id/txtRecyclerPokemonId" />
 </androidx.constraintlayout.widget.ConstraintLayout>
