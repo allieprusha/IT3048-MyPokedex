@@ -1,6 +1,5 @@
 package dto
 
-
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import edu.uc.it3048.mypokedex.R
 import kotlinx.android.synthetic.main.location_row.view.*
 
 class LocationAdapter : RecyclerView.Adapter<CustomViewHolder>() {
-
     val pokemonName = listOf("Balbasaur", "Charmander", "Squirtle")
 
     override fun getItemCount(): Int {
@@ -25,7 +23,6 @@ class LocationAdapter : RecyclerView.Adapter<CustomViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-
         holder.view.txtName.text = pokemonName[position]
     }
 }

@@ -14,8 +14,6 @@ import dto.LocationAdapter
 import kotlinx.android.synthetic.main.saved_sightings_activity.*
 
 class SavedSightingsActivity : AppCompatActivity() {
-
-
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +30,6 @@ class SavedSightingsActivity : AppCompatActivity() {
 
     // Press the back button to go back to previous activity
     override fun onSupportNavigateUp(): Boolean {
-
         onBackPressed()
         return true
     }

@@ -15,7 +15,6 @@ import edu.uc.it3048.mypokedex.PokemonInfoActivity
 import edu.uc.it3048.mypokedex.R
 
 class PokemonViewAdapter(private var context: Context, private var pokemonList : List<Pokemon>) : RecyclerView.Adapter<PokemonViewAdapter.CustomViewHolderV2>() {
-
     inner class CustomViewHolderV2(view: View) : RecyclerView.ViewHolder(view) {
         var pokemonImage: ImageView = itemView.findViewById(R.id.imgPokemon)
         var pokemonName: TextView = itemView.findViewById(R.id.txtRecyclerPokemonName)

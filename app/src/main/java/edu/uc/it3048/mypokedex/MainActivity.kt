@@ -15,7 +15,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
-
     private var compositeDisposable = CompositeDisposable()
     private val retrofit = RetrofitClientInstance.retrofitInstance
     private var iPokemonList = retrofit?.create(IPokemonDAO::class.java)
