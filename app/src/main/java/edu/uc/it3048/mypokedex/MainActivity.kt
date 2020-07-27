@@ -3,8 +3,8 @@ package edu.uc.it3048.mypokedex
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
+import android.view.View
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import dao.IPokemonDAO
 import dto.Pokemon
@@ -61,11 +61,15 @@ class MainActivity : AppCompatActivity() {
                 pokemonList = pokemon.pokemon!!
 
                 val autoCompleteAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pokemonList)
-                atcPokemonSearch.setAdapter(autoCompleteAdapter)
-            })
-    }
+                pokemonSpinner.adapter = autoCompleteAdapter
 
-    private fun filterPokemonRecyclerView() {
-        // TODO: Filter the pokemon list based off of search text
+                pokemonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) { }
+
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                    }
+                }
+            })
     }
 }
