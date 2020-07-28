@@ -6,27 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import dto.LocationAdapter
+import com.google.firebase.storage.FirebaseStorage
 import dto.Locations
-import kotlinx.android.synthetic.main.location_row.*
+import kotlinx.android.synthetic.main.profile_screen_activity.*
 import kotlinx.android.synthetic.main.saved_sightings_activity.*
 
 class SavedSightingsActivity : AppCompatActivity() {
 
-    val firebaseReference = FirebaseFirestore.getInstance()
-    val query = firebaseReference.collection("locations").orderBy("pokemonName", Query.Direction.ASCENDING)
-    val options = FirestoreRecyclerOptions.Builder<Locations>().setQuery(query, Locations::class.java).build()
+    private val firebaseReference = FirebaseFirestore.getInstance()
+    private val query = firebaseReference.collection("locations").orderBy("pokemonName", Query.Direction.ASCENDING)
+    private val options = FirestoreRecyclerOptions.Builder<Locations>().setQuery(query, Locations::class.java).build()
     private var adapter: LocationsFirestoreRecyclerAdapter? = null
 
     @SuppressLint("ResourceType")
