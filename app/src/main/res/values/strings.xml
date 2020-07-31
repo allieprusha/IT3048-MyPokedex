@@ -17,4 +17,18 @@
     <string name="recycler_image_pokemon">Pokemon Image</string>
     <string name="btn_Gallery">Gallery</string>
     <string name="gallery_description">Opens Gallery</string>
+    <string name="pokemon_Name">Name:</string>
+    <string name="pokemon_Height">Height:</string>
+    <string name="lbl_weight">Weight:</string>
+    <string name="pokemon_image">Pokemon Image</string>
+    <string name="pokemon_id">Pokemon ID:</string>
+    <string name="pokemon_num">Pokemon Number:</string>
+    <string name="pokemon_type">Pokemon Type:</string>
+    <string name="candy">Candy:</string>
+    <string name="egg">Egg:</string>
+    <string name="spawn_choice">Spawn Choice:</string>
+    <string name="avg_spawns">Average Spawns:</string>
+    <string name="spawn_time">Spawn Time:</string>
+    <string name="weakness">Weakness:</string>
+    <string name="prev_evolution">Previous Evolution:</string>
 </resources>
