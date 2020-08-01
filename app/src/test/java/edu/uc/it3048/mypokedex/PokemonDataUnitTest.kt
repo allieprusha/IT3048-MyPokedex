@@ -19,6 +19,26 @@ class PokemonDataUnitTest {
         var mvm = MainViewModel()
     }
 
+    private fun createMockData(): ArrayList<Pokemon> {
+        var pokemonList = ArrayList<Pokemon>();
+        var charmander : Pokemon = Pokemon();
+            charmander.pokemonId = 4;
+            charmander.pokemonName = "Charmander";
+        pokemonList.add(charmander)
+
+        var squirtle : Pokemon = Pokemon();
+            squirtle.pokemonId = 7;
+            squirtle.pokemonName = "Squirtle"
+        pokemonList.add(squirtle)
+
+        var bulbasaur : Pokemon = Pokemon();
+            bulbasaur.pokemonId = 1;
+            bulbasaur.pokemonName = "Bulbasaur";
+        pokemonList.add(bulbasaur)
+
+        return pokemonList;
+    }
+
     @Test
     fun confirmCharmander_outputsCharmander(){
         var pokemon: Pokemon = Pokemon();
@@ -27,9 +47,20 @@ class PokemonDataUnitTest {
         assertEquals("Charmander", pokemon.toString());
     }
 
-    @Test
-    fun pokemonDTO_maintainsState(){
-        var pokemon = Pokemon();
+    fun givenAFeedOfData(): ArrayList<Pokemon> {
+        var data = createMockData();
+        return data;
     }
 
+    fun searchForSquirtle(data : ArrayList<Pokemon>): String {
+        var charmander = data.get(1).pokemonName.toString();
+        return charmander;
+    }
+
+    @Test
+    fun searchReturnsCharmander(){
+        var data = givenAFeedOfData();
+        var result = searchForSquirtle(data);
+        assertEquals("Squirtle", result);
+    }
 }
