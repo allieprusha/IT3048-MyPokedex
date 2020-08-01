@@ -110,8 +110,8 @@ class ProfileScreenActivity : AppCompatActivity() {
                 } else {
                     val photoFile = createImageFile()
                     photoFile.also {
-                        var photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+                        val photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                         startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
                     }
                 }
@@ -157,8 +157,6 @@ class ProfileScreenActivity : AppCompatActivity() {
         firestore.collection("locations")
             .document()
             .set(location)
-
-            // TODO add log statement?
     }
 
     @SuppressLint("SimpleDateFormat")

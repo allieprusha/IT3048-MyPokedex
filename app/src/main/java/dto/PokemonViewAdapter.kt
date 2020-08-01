@@ -40,8 +40,6 @@ class PokemonViewAdapter(private var context: Context, private var pokemonList :
         holder.pokemonWeight.text = pokemonList[position].pokemonWeight.toString()
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(context, pokemonList[position].pokemonName, Toast.LENGTH_LONG).show()
-
             val pokemonInfoIntent = Intent(context, PokemonInfoActivity::class.java)
             pokemonInfoIntent.putExtra("image", pokemonList[position].pokemonImg)
             pokemonInfoIntent.putExtra("id", pokemonList[position].pokemonId.toString())

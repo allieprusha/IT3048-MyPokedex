@@ -11,7 +11,6 @@
         android:id="@+id/pokemonInfoImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:contentDescription="@string/pokemon_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
