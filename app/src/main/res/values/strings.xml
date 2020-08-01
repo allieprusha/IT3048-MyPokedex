@@ -31,4 +31,5 @@
     <string name="spawn_time">Spawn Time:</string>
     <string name="weakness">Weakness:</string>
     <string name="prev_evolution">Previous Evolution:</string>
+    <string name="select_pokemon">Select Pokemon</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dao.IPokemonDAO
 import dto.Pokemon
 import dto.PokemonViewAdapter
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         // Method calling
         login()
         fetchPokemonData()
-        populatePokemonAutoComplete()
     }
 
     // Method to login to firebase, proceed to new screen
@@ -48,17 +48,8 @@ class MainActivity : AppCompatActivity() {
             .subscribe { pokemon ->
                 pokemonList = pokemon.pokemon!!
 
-                val pokemonViewAdapter= PokemonViewAdapter(this, pokemonList)
+                val pokemonViewAdapter = PokemonViewAdapter(this, pokemonList)
                 rcycViewPokemon.adapter = pokemonViewAdapter
-            })
-    }
-
-    private fun populatePokemonAutoComplete() {
-        compositeDisposable.add(iPokemonList!!.pokemonList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { pokemon ->
-                pokemonList = pokemon.pokemon!!
 
                 val autoCompleteAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pokemonList)
                 pokemonSpinner.adapter = autoCompleteAdapter
@@ -68,6 +59,17 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
+                        val pokemonInfoIntent = Intent(view?.context, PokemonInfoActivity::class.java)
+                        pokemonInfoIntent.putExtra("image", pokemonList[position].pokemonImg)
+                        pokemonInfoIntent.putExtra("id", pokemonList[position].pokemonId.toString())
+                        pokemonInfoIntent.putExtra("num", pokemonList[position].pokemonNum.toString())
+                        pokemonInfoIntent.putExtra("type", pokemonList[position].pokemonType.toString())
+                        pokemonInfoIntent.putExtra("candy", pokemonList[position].pokemonCandy)
+                        pokemonInfoIntent.putExtra("egg", pokemonList[position].pokemonEgg)
+                        pokemonInfoIntent.putExtra("spawn_choice", pokemonList[position].pokemonSpawnChoice.toString())
+                        pokemonInfoIntent.putExtra("avg_spawns", pokemonList[position].pokemonAvgSpawns.toString())
+                        pokemonInfoIntent.putExtra("spawn_time", pokemonList[position].pokemonSpawnTime)
+                        view?.context?.startActivity(pokemonInfoIntent)
                     }
                 }
             })
