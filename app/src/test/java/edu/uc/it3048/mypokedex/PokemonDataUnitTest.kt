@@ -14,20 +14,22 @@ class PokemonDataUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule();
 
-    @Test
-    fun confirmCharmander_outputsCharmander(){
-        var pokemon: Pokemon = Pokemon()
-    }
-
     @Before
     fun populatePokemon() {
-      var mvm = MainViewModel()
+        var mvm = MainViewModel()
+    }
+
+    @Test
+    fun confirmCharmander_outputsCharmander(){
+        var pokemon: Pokemon = Pokemon();
+        pokemon.pokemonId = 4;
+        pokemon.pokemonName = "Charmander";
+        assertEquals("Charmander", pokemon.toString());
     }
 
     @Test
     fun pokemonDTO_maintainsState(){
         var pokemon = Pokemon();
-
     }
 
 }
