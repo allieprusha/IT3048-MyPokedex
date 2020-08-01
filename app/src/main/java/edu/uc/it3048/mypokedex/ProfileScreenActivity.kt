@@ -108,7 +108,7 @@ class ProfileScreenActivity : AppCompatActivity() {
                 } else {
                     val photoFile = createImageFile()
                     photoFile.also {
-                        var photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
+                        val photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                         startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
                     }

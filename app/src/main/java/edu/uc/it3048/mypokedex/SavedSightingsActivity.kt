@@ -51,6 +51,7 @@ class SavedSightingsActivity : AppCompatActivity() {
         return true
     }
 
+    // Sets up using FirestoreRecyclerAdapter
     private inner class LocationsViewHolder internal constructor(private val view: View) : RecyclerView.ViewHolder(view) {
         internal fun setPokemonName(pokemonName: String) {
             val txtPokemonName = view.findViewById<TextView>(R.id.txtName)
@@ -68,6 +69,7 @@ class SavedSightingsActivity : AppCompatActivity() {
         }
     }
 
+    // Sets up using FirestoreRecyclerAdapter
     private inner class LocationsFirestoreRecyclerAdapter internal constructor(options: FirestoreRecyclerOptions<Locations>) : FirestoreRecyclerAdapter<Locations, LocationsViewHolder>(options) {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.location_row, parent, false)

@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    // Method for fetching the Pokemon data and setting up various adapters/spinner drop down
     private fun fetchPokemonData() {
         compositeDisposable.add(iPokemonList!!.pokemonList
             .subscribeOn(Schedulers.io())
@@ -69,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                         if (autoCompleteAdapter.getItem(position) == "All Pokemon") {
                             Log.d("AutoComplete", "All Pokemon Called")
                         } else {
-
                             val pokemonInfoIntent = Intent(view?.context, PokemonInfoActivity::class.java)
                             pokemonInfoIntent.putExtra("image", pokemonList[position - 1].pokemonImg)
                             pokemonInfoIntent.putExtra("id", pokemonList[position - 1].pokemonId.toString())

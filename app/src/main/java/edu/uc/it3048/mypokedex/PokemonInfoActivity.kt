@@ -10,6 +10,11 @@ class PokemonInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pokemon_info_activity)
 
+        // Allows for back arrow navigation
+        val actionBar = supportActionBar
+        actionBar!!.title = "Saved Locations"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         if (intent.hasExtra("image")
             && intent.hasExtra("id")
             && intent.hasExtra("num")
@@ -40,5 +45,12 @@ class PokemonInfoActivity : AppCompatActivity() {
             lblAvgSpawns.text = pokemonAvgSpawns
             lblSpawnTime.text = pokemonSpawnTime
         }
+    }
+
+    // Press the back button to go back to previous activity
+    override fun onSupportNavigateUp(): Boolean {
+
+        onBackPressed()
+        return true
     }
 }
