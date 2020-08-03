@@ -1,12 +1,9 @@
 package edu.uc.it3048.mypokedex
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +11,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -22,19 +18,16 @@ import dto.Locations
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import dto.Photo
 import kotlinx.android.synthetic.main.profile_screen_activity.*
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
 
 class ProfileScreenActivity : AppCompatActivity() {
     private val LOGIN_REQUEST_CODE: Int = 607
@@ -43,10 +36,10 @@ class ProfileScreenActivity : AppCompatActivity() {
     private val GALLERY_REQUEST_CODE = 555
     private lateinit var loginProviders : List<AuthUI.IdpConfig>
     private var firestore : FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var storageReference = FirebaseStorage.getInstance()
+    private var storageReference = FirebaseStorage.getInstance().reference
     private lateinit var currentPhotoPath : String
     private var selectedPhotoUri : Uri? = null
-    private var user : FirebaseUser? = null
+    private var photos : ArrayList<Photo> = ArrayList<Photo>()
 
     init {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -91,9 +84,13 @@ class ProfileScreenActivity : AppCompatActivity() {
             }
         } else if (requestCode == SAVE_IMAGE_REQUEST_CODE) {
             Toast.makeText(this, "Image Saved", Toast.LENGTH_SHORT).show()
+            var photo = Photo(localUri = selectedPhotoUri.toString())
+            photos.add(photo)
         } else if (requestCode == GALLERY_REQUEST_CODE) {
             if (data != null && data.data != null) {
                 selectedPhotoUri = data.data
+                var photo = Photo(localUri = selectedPhotoUri.toString())
+                photos.add(photo)
                 val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri!!)
                 val bitmap = ImageDecoder.decodeBitmap(source)
                 imgPokemonLocation.setImageBitmap(bitmap)
@@ -110,8 +107,8 @@ class ProfileScreenActivity : AppCompatActivity() {
                 } else {
                     val photoFile = createImageFile()
                     photoFile.also {
-                        val photoURI = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        selectedPhotoUri = FileProvider.getUriForFile(this, "edu.uc.it3048.mypokedex", it)
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedPhotoUri)
                         startActivityForResult(takePictureIntent, SAVE_IMAGE_REQUEST_CODE)
                     }
                 }
@@ -138,25 +135,51 @@ class ProfileScreenActivity : AppCompatActivity() {
         val save = findViewById<ImageButton>(R.id.imgBtnSave)
             save.setOnClickListener {
                 saveLocation()
-                uploadImageToFirebaseStorage()
             }
     }
 
     private fun saveLocation(){
-        val sightingLocation = Locations().apply {
+        var sightingLocation = Locations().apply {
             pokemonName = edtTextPokemonName.text.toString()
             pokemonType = edtTextPokemonType.text.toString()
             pokemonDescription = edtTxtPokemonDescription.text.toString()
         }
 
-        save(sightingLocation)
+        save(sightingLocation, photos)
+        sightingLocation = Locations()
+        photos = ArrayList<Photo>()
     }
 
     // Populates database with data from profile screen text fields
-    private fun save(location: Locations){
-        firestore.collection("locations")
-            .document()
-            .set(location)
+    private fun save(location: Locations, photos: ArrayList<Photo>){
+        val document = firestore.collection("locations").document()
+        location.locationId = document.id
+        val set = document.set(location)
+            set.addOnSuccessListener {
+                Log.d("Firebase", "Save Successful")
+                if (photos != null && photos.size > 0){
+                    savePhotos(location, photos)
+                }
+                else{
+                    Toast.makeText(this, "Upload Successful", Toast.LENGTH_LONG).show()
+                }
+            }
+            set.addOnFailureListener{
+                Log.d("Firebase", "Save Failed")
+            }
+    }
+
+    private fun savePhotos(location: Locations, photos: ArrayList<Photo>) {
+        val collection = firestore.collection("locations")
+            .document(location.locationId)
+            .collection("photos")
+        photos.forEach{
+            photo -> val task = collection.add(photo)
+            task.addOnSuccessListener {
+                photo.id = it.id
+                uploadImageToFirebaseStorage(location, photos)
+            }
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -201,16 +224,45 @@ class ProfileScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImageToFirebaseStorage() {
-        val fileName = UUID.randomUUID().toString()
-        val storageReference = FirebaseStorage.getInstance().getReference("/images/$fileName")
+    //private fun uploadImageToFirebaseStorage() {
+    //    val fileName = UUID.randomUUID().toString()
+    //    val storageReference = FirebaseStorage.getInstance().getReference("/images/$fileName")
+    //    storageReference.putFile(selectedPhotoUri!!)
+    //        .addOnSuccessListener {
+    //            Toast.makeText(this, "Upload successful", Toast.LENGTH_LONG).show()
+    //        }
+    //        .addOnFailureListener {
+    //            Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+    //        }
+    //}
 
-        storageReference.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
+    private fun uploadImageToFirebaseStorage(location: Locations, photos: ArrayList<Photo>) {
+        photos.forEach(){
+            photo ->
+            var uri = Uri.parse(photo.localUri)
+            val imageRef = storageReference.child("images/" + uri.lastPathSegment)
+            val uploadTask = imageRef.putFile(uri)
+            uploadTask.addOnSuccessListener {
                 Toast.makeText(this, "Upload successful", Toast.LENGTH_LONG).show()
+                val downloadUrl = imageRef.downloadUrl
+                downloadUrl.addOnSuccessListener {
+                    photo.remoteUri = it.toString()
+                    //update cloud firestore with the public image URI.
+                    updatePhotoDatabase(location, photo)
+                }
             }
-            .addOnFailureListener {
+            uploadTask.addOnFailureListener {
                 Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+                Log.e("Firebase", it.message)
             }
+        }
+    }
+
+    private fun updatePhotoDatabase(location: Locations, photo: Photo) {
+        firestore.collection("locations")
+            .document(location.locationId)
+            .collection("photos")
+            .document(photo.id)
+            .set(photo)
     }
 }
