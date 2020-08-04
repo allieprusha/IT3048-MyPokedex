@@ -81,23 +81,35 @@ class SavedSightingsActivity : AppCompatActivity() {
         internal fun setLocationImage(locationId : String){
             val imgLocationRecycler = view.findViewById<ImageView>(R.id.imgLocationRecycler)
             var photoUri: String
-            val queryPhoto = firebaseReference.collection("locations").document(locationId).collection("photos")
-            queryPhoto.get()
-                .addOnSuccessListener { collection ->
-                    if (collection != null && collection.any()){
-                        var photoDTO = collection.firstOrNull()?.toObject<Photo>() ?: Photo()
-                        photoUri = photoDTO?.remoteUri
-                        val httpsReference = storage.getReferenceFromUrl(photoUri)
-                        val ONE_GIGABYTE: Long = 1024 * 1024 * 1024
-                        var bitmap = httpsReference.getBytes(ONE_GIGABYTE)
-                            .addOnSuccessListener {
-                                imgLocationRecycler.setImageBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(it, 0, it.size), 250, 250, true))
-                            }
+            try {
+                val queryPhoto = firebaseReference.collection("locations").document(locationId)
+                    .collection("photos")
+                queryPhoto.get()
+                    .addOnSuccessListener { collection ->
+                        if (collection != null && collection.any()) {
+                            var photoDTO = collection.firstOrNull()?.toObject<Photo>() ?: Photo()
+                            photoUri = photoDTO?.remoteUri
+                            val httpsReference = storage.getReferenceFromUrl(photoUri)
+                            val ONE_GIGABYTE: Long = 1024 * 1024 * 1024
+                            var bitmap = httpsReference.getBytes(ONE_GIGABYTE)
+                                .addOnSuccessListener {
+                                    imgLocationRecycler.setImageBitmap(
+                                        Bitmap.createScaledBitmap(
+                                            BitmapFactory.decodeByteArray(it, 0, it.size),
+                                            250,
+                                            250,
+                                            true
+                                        )
+                                    )
+                                }
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    Log.e("Firebase", it.message)
-                }
+                    .addOnFailureListener {
+                        Log.e("Firebase", it.message)
+                    }
+            }
+            //Firebase query throws an error if the result does not have photos.
+            catch(e : Exception){Log.e("Firebase", e.message)}
         }
     }
 
